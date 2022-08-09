@@ -1,56 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[System.Serializable]
-
-
-public class Wave {
-    public string waveName;
-    public int noOfEnemies;
-    public GameObject[] typeOfEnemies;
-    public float spawnInterval;
-}
-
+using UnityEngine.UI;
 
 public class Spawn : MonoBehaviour
 {
-    public Wave[] waves;
-    public Transform[] wavePoints;
+    public GameObject[] nochar;
+    public float posisiMin, posisiMax;
+    public int enemyCount;
 
-    private Wave currentWave;
-    private int currentWaveNumber;
-    private float nextSpawnTime;
+    public float timeBetweenWaves = 3.0f;
+    public Text waveText;
+    private int waveCount;
 
-    private bool canSpawn = true;
+    bool waveIsDone = true;
 
-
-    private void Update()
+    // Start is called before the first frame update
+    void Start()
     {
-        currentWave = waves[currentWaveNumber];
-        SpawnWave();
-        GameObject[] totalEnemies = GameObject.FindGameObjectsWithTag("Zombies");
-        if (totalEnemies.Length == 0 && !canSpawn)
+        waveCount = 1;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        waveText.text = "Wave " + waveCount;
+
+        if (waveIsDone == true)
         {
-            currentWaveNumber++;
-            canSpawn = true;
+            StartCoroutine(Munculchar());
         }
     }
 
-    void SpawnWave()
+    IEnumerator Munculchar()
     {
-        if (canSpawn && nextSpawnTime < Time.time)
-        {
-            GameObject randomEnemy = currentWave.typeOfEnemies[Random.Range(0, currentWave.typeOfEnemies.Length)];
-            Transform randomPoint = wavePoints[Random.Range(0, wavePoints.Length)];
-            Instantiate(randomEnemy, randomPoint.position, Quaternion.identity);
-            currentWave.noOfEnemies--;
-            nextSpawnTime = Time.time + currentWave.spawnInterval;
-            if (currentWave.noOfEnemies == 0)
-            { 
-                canSpawn = false;
-            }
-        }
-       
-    }
+        waveIsDone = false;
 
+        for (int i = 0; i < enemyCount; i++)
+        {
+            GameObject randomChar = nochar[Random.Range(0, nochar.Length)];
+            Instantiate(randomChar, transform.position + Vector3.right * Random.Range(posisiMin, posisiMax), Quaternion.identity);
+            yield return new WaitForSeconds(2);
+        }
+        waveCount += 1;
+        yield return new WaitForSeconds(timeBetweenWaves);
+        waveIsDone = true;
+    }
 }

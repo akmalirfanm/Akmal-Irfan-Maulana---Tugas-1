@@ -46,9 +46,16 @@ public class GameControl : MonoBehaviour
                 heart2.gameObject.SetActive(false);
                 heart3.gameObject.SetActive(false);
                 gameover.gameObject.SetActive(true);
+                Time.timeScale = 0;
                 break;
 
         }
 
+    }
+
+    public void over()
+    {
+        gameover.gameObject.SetActive(true);
+        Time.timeScale = 0;
     }
 }

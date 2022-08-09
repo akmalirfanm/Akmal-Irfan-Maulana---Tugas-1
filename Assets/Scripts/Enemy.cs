@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectDestroy : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     private Scoring skor;
 
