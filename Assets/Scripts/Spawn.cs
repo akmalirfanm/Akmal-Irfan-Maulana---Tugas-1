@@ -40,7 +40,7 @@ public class Spawn : MonoBehaviour
         {
             GameObject randomChar = nochar[Random.Range(0, nochar.Length)];
             Instantiate(randomChar, transform.position + Vector3.right * Random.Range(posisiMin, posisiMax), Quaternion.identity);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
         }
         waveCount += 1;
         yield return new WaitForSeconds(timeBetweenWaves);

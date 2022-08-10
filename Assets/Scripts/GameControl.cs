@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         health = 3;
         heart1.gameObject.SetActive(true);
         heart2.gameObject.SetActive(true);
@@ -57,5 +59,10 @@ public class GameControl : MonoBehaviour
     {
         gameover.gameObject.SetActive(true);
         Time.timeScale = 0;
+    }
+
+    public void retry()
+    {
+        SceneManager.LoadScene(0);
     }
 }
